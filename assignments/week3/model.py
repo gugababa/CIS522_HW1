@@ -24,7 +24,7 @@ class MLP(torch.nn.Module):
         """
 
         # create activation function
-        exec("self.actv = nn.%s" % activation)
+        self.actv = activation
 
         self.layers = nn.ModuleList()
         # initialize the layers of the MLP
