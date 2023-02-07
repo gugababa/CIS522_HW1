@@ -50,13 +50,11 @@ class GradientDescentLinearRegression(LinearRegression):
     """
 
     def gradient(self, X, y, w):
-
         return (2 / X.shape[0]) * X.T @ (X @ w - y)
 
     def fit(
         self, X: np.ndarray, y: np.ndarray, lr: float = 0.01, epochs: int = 1000
     ) -> None:
-
         """Performs fit of the model
         Args:
             X = matrix of features (d) and examples (n)
@@ -74,7 +72,6 @@ class GradientDescentLinearRegression(LinearRegression):
             y = y.reshape(-1, 1)
 
         for i in range(epochs):
-
             self.w -= lr * self.gradient(X, y, self.w)
 
     def predict(self, X: np.ndarray) -> np.ndarray:

@@ -33,7 +33,6 @@ class MLP(torch.nn.Module):
         self.layers = torch.nn.ModuleList()
         # initialize the layers of the MLP
         for i in range(hidden_count):
-
             num_of_hidden_outputs = hidden_size
             self.layers += [torch.nn.Linear(input_size, num_of_hidden_outputs)]
             input_size = num_of_hidden_outputs
@@ -57,7 +56,6 @@ class MLP(torch.nn.Module):
         x = x.view(x.shape[0], -1)
 
         for i in self.layers:
-
             x = self.actv(i(x))
 
         x = self.out(x)
