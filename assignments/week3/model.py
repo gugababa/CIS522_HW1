@@ -2,7 +2,7 @@ import torch
 from typing import Callable
 
 
-class MLP(torch.nn.module):
+class MLP(torch.nn.Module):
     def __init__(
         self,
         input_size: int,
