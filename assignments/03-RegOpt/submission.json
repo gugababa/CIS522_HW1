@@ -2,11 +2,11 @@
     "assignment_name": "RegOpt",
     "contributors": [
         {
-            "name": "Change this to your name",
-            "pennkey": "MyPennKey"
+            "name": "Anshuman Swain",
+            "pennkey": "aswai"
         }
     ],
     "sources": [
-        "Don't forget to list your sources/attribution here!"
+        "PyTorch documentation on LRScheduler","Kaggle documentation on plots of learning rates"
     ]
 }
