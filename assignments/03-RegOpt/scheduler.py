@@ -37,7 +37,7 @@ class CustomLRScheduler(_LRScheduler):
             return [
                 self.eta_min
                 + (base_lr - self.eta_min)
-                * (1 + math.cos((self.last_epoch) * math.pi / self.T_max))
+                * (1 + math.cos(self.last_epoch * math.pi / self.T_max))
                 / 2
                 for base_lr in self.base_lrs
             ]
@@ -48,7 +48,7 @@ class CustomLRScheduler(_LRScheduler):
                 for base_lr in self.base_lrs
             ]
         return [
-            (1 + math.cos(math.pi * self.last_epoch / self.T_max))
+            (1 + math.cos(math.pi * (self.last_epoch) / self.T_max))
             / (1 + math.cos(math.pi * (self.last_epoch - 1) / self.T_max))
             * (base_lr - self.eta_min)
             + self.eta_min

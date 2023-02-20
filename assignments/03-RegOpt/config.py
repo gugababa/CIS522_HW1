@@ -6,7 +6,6 @@ from torchvision.transforms import (
     Compose,
     Normalize,
     ToTensor,
-    ColorJitter,
     RandomRotation,
     RandomHorizontalFlip,
 )
@@ -22,7 +21,7 @@ class CONFIG:
         # You can pass arguments to the learning rate scheduler
         # constructor here.
         "max_epochs": 10,
-        "min_lr": 0.01,
+        "min_lr": 0.001,
     }
 
     optimizer_factory: Callable[
@@ -38,7 +37,6 @@ class CONFIG:
         [
             ToTensor(),
             RandomRotation(10),
-            RandomHorizontalFlip(),
             Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
         ]
     )

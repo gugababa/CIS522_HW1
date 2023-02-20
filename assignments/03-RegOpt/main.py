@@ -14,7 +14,8 @@ from scheduler import CustomLRScheduler
 from config import CONFIG
 
 # Device configuration
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device("mps")
 
 
 def get_cifar10_data() -> Tuple[DataLoader, DataLoader]:
