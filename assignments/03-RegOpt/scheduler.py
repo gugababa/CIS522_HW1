@@ -2,6 +2,7 @@ from typing import List
 
 from torch.optim.lr_scheduler import _LRScheduler
 import numpy as np
+import math
 
 
 class CustomLRScheduler(_LRScheduler):
@@ -10,7 +11,7 @@ class CustomLRScheduler(_LRScheduler):
     Implementation of a custom LR scheduler that inherits from PyTorch _LRScheduler
     """
 
-    def __init__(self, optimizer, gamma, stepsize, last_epoch=-1):
+    def __init__(self, optimizer, max_epochs, min_lr, last_epoch=-1):
         """
         Create a new scheduler.
 
@@ -18,8 +19,8 @@ class CustomLRScheduler(_LRScheduler):
         if you need to add new parameters.
 
         """
-        self.gamma = gamma
-        self.step_size = stepsize
+        self.T_max = max_epochs
+        self.eta_min = min_lr
         super(CustomLRScheduler, self).__init__(optimizer, last_epoch)
 
     def get_lr(self) -> List[float]:
@@ -27,10 +28,29 @@ class CustomLRScheduler(_LRScheduler):
         # this function (because it is called internally by Torch)
 
         """
-        Create an exponential scheduler, with the learning rate decaying exponentially with square root of gamma value
+        Cosine annealing scheduler derived from PyTorch documentation
         """
 
-        if (self.last_epoch == 0) or (self.last_epoch % self.step_size != 0):
-            return [group["lr"] for group in self.optimizer.param_groups]
-
-        return [i["lr"] * (self.gamma) for i in self.optimizer.param_groups]
+        if self.last_epoch == 0:
+            return [base_lr for base_lr in self.base_lrs]
+        elif self._step_count == 1 and self.last_epoch > 0:
+            return [
+                self.eta_min
+                + (base_lr - self.eta_min)
+                * (1 + math.cos((self.last_epoch) * math.pi / self.T_max))
+                / 2
+                for base_lr in self.base_lrs
+            ]
+        elif (self.last_epoch - 1 - self.T_max) % (2 * self.T_max) == 0:
+            return [
+                base_lr
+                + (base_lr - self.eta_min) * (1 - math.cos(math.pi / self.T_max)) / 2
+                for base_lr in self.base_lrs
+            ]
+        return [
+            (1 + math.cos(math.pi * self.last_epoch / self.T_max))
+            / (1 + math.cos(math.pi * (self.last_epoch - 1) / self.T_max))
+            * (base_lr - self.eta_min)
+            + self.eta_min
+            for base_lr in self.base_lrs
+        ]

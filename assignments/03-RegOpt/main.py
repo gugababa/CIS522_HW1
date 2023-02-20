@@ -1,8 +1,6 @@
 """
 A complete implementation and training of a CIFAR10 classifier.
-
 The prompt is to create another LearningRateScheduler.
-
 """
 from typing import Tuple
 
@@ -22,14 +20,11 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 def get_cifar10_data() -> Tuple[DataLoader, DataLoader]:
     """
     Get the CIFAR10 data from torchvision.
-
     Arguments:
         None
-
     Returns:
         train_loader (DataLoader): The training data loader.
         test_loader (DataLoader): The test data loader.
-
     """
     # Get the training data:
     train_data = CIFAR10(
@@ -59,7 +54,6 @@ def train(
 ) -> None:
     """
     Train a model on the data.
-
     Arguments:
         model (torch.nn.Module): The model to train.
         train_loader (DataLoader): The training data loader.
@@ -70,10 +64,8 @@ def train(
         learning_rate_scheduler (torch.optim.lr_scheduler._LRScheduler): The
             learning rate scheduler to use.
         device (torch.device): The device to use for training.
-
     Returns:
         None
-
     """
     # Move the model to the device:
     model.to(device)
@@ -110,15 +102,12 @@ def compute_accuracy(
 ) -> float:
     """
     Compute the accuracy of a model on some data.
-
     Arguments:
         model (torch.nn.Module): The model to compute the accuracy of.
         data_loader (DataLoader): The data loader to use.
         device (torch.device): The device to use for training.
-
     Returns:
         accuracy (float): The accuracy of the model on the data.
-
     """
     # Set the model to evaluation mode:
     model.eval()
@@ -143,13 +132,10 @@ def compute_accuracy(
 def main() -> None:
     """
     Train a model on the data.
-
     Arguments:
         None
-
     Returns:
         None
-
     """
     # Create the data loaders:
     train_loader, test_loader = get_cifar10_data()

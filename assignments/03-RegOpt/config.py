@@ -2,20 +2,27 @@ from typing import Callable
 import torch
 import torch.optim
 import torch.nn as nn
-from torchvision.transforms import Compose, Normalize, ToTensor
+from torchvision.transforms import (
+    Compose,
+    Normalize,
+    ToTensor,
+    ColorJitter,
+    RandomRotation,
+    RandomHorizontalFlip,
+)
 
 
 class CONFIG:
-    batch_size = 32
-    num_epochs = 50
-    initial_learning_rate = 8e-3
-    initial_weight_decay = 0
+    batch_size = 256
+    num_epochs = 15
+    initial_learning_rate = 0.05
+    initial_weight_decay = 0.0001
 
     lrs_kwargs = {
         # You can pass arguments to the learning rate scheduler
         # constructor here.
-        "gamma": 0.1,
-        "stepsize": 5,
+        "max_epochs": 10,
+        "min_lr": 0.01,
     }
 
     optimizer_factory: Callable[
@@ -29,10 +36,9 @@ class CONFIG:
 
     transforms = Compose(
         [
-            torch.transforms.ColorJitter(75, 80),
-            torch.transforms.RandomRotation(10),
-            torch.transforms.RandomHorizontalFlip(),
-            Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
             ToTensor(),
+            RandomRotation(10),
+            RandomHorizontalFlip(),
+            Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
         ]
     )
