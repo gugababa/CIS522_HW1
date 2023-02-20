@@ -29,6 +29,10 @@ class CONFIG:
 
     transforms = Compose(
         [
+            torch.transforms.ColorJitter(75, 80),
+            torch.transforms.RandomRotation(10),
+            torch.transforms.RandomHorizontalFlip(),
+            Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
             ToTensor(),
         ]
     )
