@@ -21,7 +21,8 @@ class CONFIG:
         # You can pass arguments to the learning rate scheduler
         # constructor here.
         "max_epochs": 10,
-        "min_lr": 0.001,
+        "linear_rate": 0.004,
+        "gamma": 0.2,
     }
 
     optimizer_factory: Callable[

@@ -11,7 +11,7 @@ class CustomLRScheduler(_LRScheduler):
     Implementation of a custom LR scheduler that inherits from PyTorch _LRScheduler
     """
 
-    def __init__(self, optimizer, max_epochs, min_lr, last_epoch=-1):
+    def __init__(self, optimizer, max_epochs, linear_rate, gamma, last_epoch=-1):
         """
         Create a new scheduler.
 
@@ -19,8 +19,9 @@ class CustomLRScheduler(_LRScheduler):
         if you need to add new parameters.
 
         """
-        self.T_max = max_epochs
-        self.eta_min = min_lr
+        self.max_linear_epochs = max_epochs
+        self.linear_rate = linear_rate
+        self.gamma = gamma
         super(CustomLRScheduler, self).__init__(optimizer, last_epoch)
 
     def get_lr(self) -> List[float]:
@@ -28,29 +29,12 @@ class CustomLRScheduler(_LRScheduler):
         # this function (because it is called internally by Torch)
 
         """
-        Cosine annealing scheduler derived from PyTorch documentation
+        Linear increase in learning rate, followed by an exponential decay of learning rate
         """
 
         if self.last_epoch == 0:
             return [base_lr for base_lr in self.base_lrs]
-        elif self._step_count == 1 and self.last_epoch > 0:
-            return [
-                self.eta_min
-                + (base_lr - self.eta_min)
-                * (1 + math.cos(self.last_epoch * math.pi / self.T_max))
-                / 2
-                for base_lr in self.base_lrs
-            ]
-        elif (self.last_epoch - 1 - self.T_max) % (2 * self.T_max) == 0:
-            return [
-                base_lr
-                + (base_lr - self.eta_min) * (1 - math.cos(math.pi / self.T_max)) / 2
-                for base_lr in self.base_lrs
-            ]
-        return [
-            (1 + math.cos(math.pi * (self.last_epoch) / self.T_max))
-            / (1 + math.cos(math.pi * (self.last_epoch - 1) / self.T_max))
-            * (base_lr - self.eta_min)
-            + self.eta_min
-            for base_lr in self.base_lrs
-        ]
+        else:
+            for i in range(self.max_linear_epochs):
+                return [base_lr + self.linear_rate for base_lr in self.base_lrs]
+            return [base_lr * self.gamma for base_lr in self.base_lrs]
