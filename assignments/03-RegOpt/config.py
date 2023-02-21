@@ -13,15 +13,15 @@ from torchvision.transforms import (
 
 class CONFIG:
     batch_size = 256
-    num_epochs = 15
+    num_epochs = 10
     initial_learning_rate = 0.05
     initial_weight_decay = 0.0001
 
     lrs_kwargs = {
         # You can pass arguments to the learning rate scheduler
         # constructor here.
-        "max_epochs": 10,
-        "linear_rate": 0.004,
+        "max_epochs": 5,
+        "linear_rate": 0.005,
         "gamma": 0.2,
     }
 
