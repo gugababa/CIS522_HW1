@@ -2,11 +2,15 @@
     "assignment_name": "Convolutions",
     "contributors": [
         {
-            "name": "Anshuman Swain, Vishnu Nair",
-            "pennkey": "aswai, nvishnu"
+            "name": "Vishnu Nair",
+            "pennkey": "nvishnu"
+        },
+                {
+            "name": "Anshuman Swain",
+            "pennkey": "aswai"
         }
     ],
     "sources": [
-        "PyTorch documentation, class slides, CIS 519: Machine Learning"
+        "Pytorch documentation, CIS 519: Machine Learning, CIS 522 Lecture Slides"
     ]
 }
