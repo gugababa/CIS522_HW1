@@ -4,7 +4,8 @@ import torch.nn as nn
 
 class Model(torch.nn.Module):
     """This class instantiates and propagates a convolutional neural network (CNN) built for the CIFAR dataset.
-    We built out a deep neural network that uses 3 convolutional layers, 3 batch normalization layers, and 3 fully connected layers"""
+    We built out a deep neural network that uses 3 convolutional layers, 3 batch normalization layers, and 3 fully connected layers
+    """
 
     def __init__(self, num_channels: int, num_classes: int) -> None:
         """This constructor initializes the architecture of the CNN"""
